@@ -24,3 +24,12 @@ További információk:
 `docker compose down`: **_törli_** a konténereket  
 
 **Ha töröljük a database konténert, elvesznek a benne lévő adatok!**
+
+## Branching strategy
+
+* Always checkout the master branch first and pull it.
+* Create a new branch `TE25MARSW-64-<Short-description>`
+* Create new commit(s) on the new branch
+* Push the new branch to the `origin/TE25MARSW-64-<Short-description`
+* Create pull request
+* Merge PR (pull request) to master

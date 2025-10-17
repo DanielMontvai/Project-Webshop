@@ -1,11 +1,11 @@
-from WebshopPage import WebshopPage
+from WebshopMainPage import WebshopMainPage
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 
 class TestWebShop:
     def setup_method(self):
-        self.page = WebshopPage()
+        self.page = WebshopMainPage()
         self.page.get()
 
     def teardown_method(self):
@@ -13,3 +13,9 @@ class TestWebShop:
 
     def test_pricecheck(self):
         assert self.page.price_of_instrument_by_order_number(1) == "Price: $90000"
+
+    def test_name(self):
+        assert self.page.name_of_instrument(1) == "Viola made of birch"
+
+    def test_number_available_instruments(self):
+        assert len(self.page.number_of_available_insturments()) == 22

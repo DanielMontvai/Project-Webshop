@@ -27,6 +27,7 @@ class WebshopMainPage(GeneralPage):
         wait = WebDriverWait(self.browser, 5)
         names = wait.until(EC.presence_of_all_elements_located(
             (By.XPATH, '//mat-card-title[@class="mat-tooltip-trigger mat-card-title"]')))
+        mp_names_list = []
         if number == -1:
             for name in names:
                 mp_names_list.append(name.text)

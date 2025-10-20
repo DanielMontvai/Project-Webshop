@@ -30,8 +30,15 @@ jobs:
 
     - name: Install Chrome & Chromedriver
       run: |
-        sudo apt-get update
-        sudo apt-get install -y chromium-browser chromium-chromedriver
+        wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+        sudo dpkg -i google-chrome-stable_current_amd64.deb || sudo apt-get -fy install
+        CHROME_VERSION=$(google-chrome --version | awk '{print $3}')
+        CHROME_MAJOR=$(echo $CHROME_VERSION | cut -d. -f1)
+        wget -q https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_MAJOR -O LATEST_RELEASE
+        wget -q https://chromedriver.storage.googleapis.com/$(cat LATEST_RELEASE)/chromedriver_linux64.zip
+        unzip chromedriver_linux64.zip
+        sudo mv chromedriver /usr/local/bin/
+        rm google-chrome-stable_current_amd64.deb chromedriver_linux64.zip LATEST_RELEASE
 
     - name: Start docker services (webshop)
       uses: hoverkraft-tech/compose-action@v2.0.1

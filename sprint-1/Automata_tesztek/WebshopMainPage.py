@@ -41,4 +41,4 @@ class WebshopMainPage(GeneralPage):
     def name_price_dictionary(self):
         instrument_names = self.name_of_instrument()
         instrument_prices = self.price_of_instrument_by_order_number()
-        return dict(zip(names, prices))
+        return dict(zip(instrument_names, instrument_prices))

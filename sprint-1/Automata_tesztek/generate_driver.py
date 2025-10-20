@@ -10,6 +10,7 @@ def get_preconfigured_chrome_driver():
         options.add_argument("--no-sandbox")
         options.add_argument("--disable-dev-shm-usage")
         options.add_argument("--disable-gpu")
+        browser = webdriver.Chrome(service=Service("/usr/bin/chromedriver"), options=options)
     else:
         options.add_argument("window-position=0,-1000")
         options.add_experimental_option("detach", True)

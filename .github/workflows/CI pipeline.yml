@@ -38,11 +38,6 @@ jobs:
       with:
         compose-file: "./sprint-1/compose.yaml"
 
-    - name: Wait for services to be ready
-      run: |
-        echo "Waiting 10 seconds for containers to become ready..."
-        sleep 10
-
     - name: Lint with flake8
       run: |
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics

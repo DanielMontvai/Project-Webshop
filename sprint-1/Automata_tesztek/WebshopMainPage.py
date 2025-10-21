@@ -71,6 +71,7 @@ class WebshopMainPage(GeneralPage):
         wait = WebDriverWait(self.browser, 20)
         wait.until(EC.visibility_of_element_located((By.XPATH, '//button[@type="submit"]')))
         button_login = wait.until(EC.element_to_be_clickable((By.XPATH, '//button[@type="submit"]')))
+
         button_login.click()
 
     def login_process(self, username, passowrd):

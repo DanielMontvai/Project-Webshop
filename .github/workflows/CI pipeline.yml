@@ -11,7 +11,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     env:
-      CI: "true"  # important for headless Chrome
+      CI: "true"
 
     steps:
       - uses: actions/checkout@v4

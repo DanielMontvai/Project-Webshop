@@ -12,7 +12,7 @@ class WebshopMainPage(GeneralPage):
         self.browser.quit()
 
     def price_of_instrument_by_order_number(self, number: int = -1):
-        wait = WebDriverWait(self.browser, 20)
+        wait = WebDriverWait(self.browser, 5)
         prices = wait.until(EC.presence_of_all_elements_located((By.XPATH, '//mat-card-subtitle')))
         mp_prices_list = []
         if number == -1:
@@ -24,7 +24,7 @@ class WebshopMainPage(GeneralPage):
 
 
     def name_of_instrument(self, number: int = -1):
-        wait = WebDriverWait(self.browser, 20)
+        wait = WebDriverWait(self.browser, 5)
         names = wait.until(EC.presence_of_all_elements_located(
             (By.XPATH, '//mat-card-title[@class="mat-tooltip-trigger mat-card-title"]')))
         mp_names_list = []
@@ -43,62 +43,41 @@ class WebshopMainPage(GeneralPage):
         instrument_prices = self.price_of_instrument_by_order_number()
         return dict(zip(instrument_names, instrument_prices))
 
-    # def reglogin(self):
-    #     wait = WebDriverWait(self.browser, 20)
-    #     wait.until(EC.visibility_of_element_located((By.ID, 'regLogin')))
-    #     login = wait.until(EC.element_to_be_clickable((By.ID, 'regLogin')))
-    #     login.click()
-
     def reglogin(self):
-        wait = WebDriverWait(self.browser, 30)
-
-        # click login button
-        login_button = wait.until(EC.element_to_be_clickable((By.ID, 'regLogin')))
-        login_button.click()
-
-        # ✅ wait for Material overlay to load
-        wait.until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, '.cdk-overlay-pane'))
-        )
+        wait = WebDriverWait(self.browser, 5)
+        try:
+            button_burger = wait.until(
+                EC.element_to_be_clickable((By.XPATH, '//mat-toolbar-row[@class="mat-toolbar-row"]/button')))
+            button_burger.click()
+            wait.until(EC.presence_of_element_located((By.XPATH, '//div[@class="sidenavbar_icons"]')))
+            login = wait.until(
+                EC.element_to_be_clickable((By.XPATH, '//div[@class="sidenavbar_icons"]//mat-icon[text()="person"]')))
+            login.click()
+        except:
+            login = wait.until(EC.element_to_be_clickable((By.ID, 'regLogin')))
+            login.click()
 
     def logout(self):
-        wait = WebDriverWait(self.browser, 20)
-        wait.until(EC.visibility_of_element_located((By.ID, 'button_logOut')))
+        wait = WebDriverWait(self.browser, 5)
         button_logout = wait.until(EC.element_to_be_clickable((By.ID, 'button_logOut')))
         return button_logout
 
     def input_username(self):
-        wait = WebDriverWait(self.browser, 20)
-        wait.until(EC.visibility_of_element_located((By.ID, 'username_input')))
+        wait = WebDriverWait(self.browser, 5)
         username = wait.until(EC.element_to_be_clickable((By.ID, 'username_input')))
         return username
 
     def input_password(self):
-        wait = WebDriverWait(self.browser, 20)
-        wait.until(EC.visibility_of_element_located((By.ID, 'password_input')))
+        wait = WebDriverWait(self.browser, 5)
         password = wait.until(EC.element_to_be_clickable((By.ID, 'password_input')))
         return password
 
     def button_login(self):
-        wait = WebDriverWait(self.browser, 20)
-        wait.until(EC.visibility_of_element_located((By.XPATH, '//button[@type="submit"]')))
+        wait = WebDriverWait(self.browser, 5)
         button_login = wait.until(EC.element_to_be_clickable((By.XPATH, '//button[@type="submit"]')))
-
         button_login.click()
 
-    # def login_process(self, username, passowrd):
-    #     self.reglogin()
-    #     self.input_username().send_keys(username)
-    #     self.input_password().send_keys(passowrd)
-
-    def login_process(self, username, password):
+    def login_process(self, username, passowrd):
         self.reglogin()
-
-        wait = WebDriverWait(self.browser, 30)
-
-        # now inside overlay!
-        user = wait.until(EC.element_to_be_clickable((By.ID, 'username_input')))
-        pwd = wait.until(EC.element_to_be_clickable((By.ID, 'password_input')))
-
-        user.send_keys(username)
-        pwd.send_keys(password)
+        self.input_password().send_keys(passowrd)
+        self.input_username().send_keys(username)

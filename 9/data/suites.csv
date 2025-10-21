@@ -1,0 +1,5 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","536","test_name","sprint-1.Automata_tesztek","Tue Oct 21 06:52:55 UTC 2025","passed","Tue Oct 21 06:52:56 UTC 2025","TestWebShop","test_pricecheck","",""
+"","570","test_pricecheck","sprint-1.Automata_tesztek","Tue Oct 21 06:52:54 UTC 2025","passed","Tue Oct 21 06:52:55 UTC 2025","TestWebShop","test_pricecheck","",""
+"","199","test_number_available_instruments","sprint-1.Automata_tesztek","Tue Oct 21 06:52:56 UTC 2025","passed","Tue Oct 21 06:52:57 UTC 2025","TestWebShop","test_pricecheck","",""
+"","20479","test_login","sprint-1.Automata_tesztek","Tue Oct 21 06:52:57 UTC 2025","broken","Tue Oct 21 06:53:18 UTC 2025","TestWebShop","test_pricecheck","",""

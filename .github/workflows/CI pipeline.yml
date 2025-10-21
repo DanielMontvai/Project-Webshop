@@ -43,6 +43,17 @@ jobs:
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
+    - name: Wait for frontend (CI readiness check)
+      run: |
+        for i in {1..30}; do
+          if curl -s http://localhost:4200 > /dev/null; then
+            echo "✅ Frontend is up!"
+            break
+          fi
+          echo "⏳ Waiting for frontend..."
+          sleep 2
+        done
+
     - name: Run Selenium tests & collect Allure results
       run: |
         pytest ./sprint-1 --alluredir=./reports/allure-results

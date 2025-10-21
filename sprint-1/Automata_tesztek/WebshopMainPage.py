@@ -43,11 +43,24 @@ class WebshopMainPage(GeneralPage):
         instrument_prices = self.price_of_instrument_by_order_number()
         return dict(zip(instrument_names, instrument_prices))
 
+    # def reglogin(self):
+    #     wait = WebDriverWait(self.browser, 20)
+    #     wait.until(EC.visibility_of_element_located((By.ID, 'regLogin')))
+    #     login = wait.until(EC.element_to_be_clickable((By.ID, 'regLogin')))
+    #     login.click()
+
     def reglogin(self):
-        wait = WebDriverWait(self.browser, 20)
-        wait.until(EC.visibility_of_element_located((By.ID, 'regLogin')))
-        login = wait.until(EC.element_to_be_clickable((By.ID, 'regLogin')))
-        login.click()
+        wait = WebDriverWait(self.browser, 30)
+
+        # ensure page loaded
+        wait.until(EC.presence_of_element_located((By.TAG_NAME, "body")))
+
+        # wait for login button
+        login_button = wait.until(EC.element_to_be_clickable((By.ID, 'regLogin')))
+        login_button.click()
+
+        # extra wait for modal to finish opening on slower CI
+        wait.until(EC.visibility_of_element_located((By.ID, 'username_input')))
 
     def logout(self):
         wait = WebDriverWait(self.browser, 20)
@@ -76,5 +89,5 @@ class WebshopMainPage(GeneralPage):
 
     def login_process(self, username, passowrd):
         self.reglogin()
-        self.input_password().send_keys(passowrd)
         self.input_username().send_keys(username)
+        self.input_password().send_keys(passowrd)

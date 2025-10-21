@@ -52,14 +52,10 @@ class WebshopMainPage(GeneralPage):
     def reglogin(self):
         wait = WebDriverWait(self.browser, 30)
 
-        # ensure page loaded
-        wait.until(EC.presence_of_element_located((By.TAG_NAME, "body")))
-
-        # wait for login button
         login_button = wait.until(EC.element_to_be_clickable((By.ID, 'regLogin')))
         login_button.click()
 
-        # extra wait for modal to finish opening on slower CI
+        # ✅ Add this tiny wait to allow Angular to finish DOM re-render
         wait.until(EC.visibility_of_element_located((By.ID, 'username_input')))
 
     def logout(self):

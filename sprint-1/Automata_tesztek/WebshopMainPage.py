@@ -58,7 +58,7 @@ class WebshopMainPage(GeneralPage):
             login = wait.until(
                 EC.element_to_be_clickable((By.XPATH, '//div[@class="sidenavbar_icons"]//mat-icon[text()="person"]')))
             login.click()
-        except RegLogin_visible:
+        except Exception:
             login = wait.until(EC.element_to_be_clickable((By.ID, 'regLogin')))
             login.click()
 

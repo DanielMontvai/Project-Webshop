@@ -52,11 +52,14 @@ class WebshopMainPage(GeneralPage):
     def reglogin(self):
         wait = WebDriverWait(self.browser, 30)
 
+        # click login button
         login_button = wait.until(EC.element_to_be_clickable((By.ID, 'regLogin')))
         login_button.click()
 
-        # ✅ Add this tiny wait to allow Angular to finish DOM re-render
-        wait.until(EC.visibility_of_element_located((By.ID, 'username_input')))
+        # ✅ wait for Material overlay to load
+        wait.until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, '.cdk-overlay-pane'))
+        )
 
     def logout(self):
         wait = WebDriverWait(self.browser, 20)
@@ -83,7 +86,19 @@ class WebshopMainPage(GeneralPage):
 
         button_login.click()
 
-    def login_process(self, username, passowrd):
+    # def login_process(self, username, passowrd):
+    #     self.reglogin()
+    #     self.input_username().send_keys(username)
+    #     self.input_password().send_keys(passowrd)
+
+    def login_process(self, username, password):
         self.reglogin()
-        self.input_username().send_keys(username)
-        self.input_password().send_keys(passowrd)
+
+        wait = WebDriverWait(self.browser, 30)
+
+        # now inside overlay!
+        user = wait.until(EC.element_to_be_clickable((By.ID, 'username_input')))
+        pwd = wait.until(EC.element_to_be_clickable((By.ID, 'password_input')))
+
+        user.send_keys(username)
+        pwd.send_keys(password)

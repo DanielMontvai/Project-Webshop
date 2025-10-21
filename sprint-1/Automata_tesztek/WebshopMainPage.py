@@ -45,26 +45,31 @@ class WebshopMainPage(GeneralPage):
 
     def reglogin(self):
         wait = WebDriverWait(self.browser, 20)
+        wait.until(EC.visibility_of_element_located((By.ID, 'regLogin')))
         login = wait.until(EC.element_to_be_clickable((By.ID, 'regLogin')))
         login.click()
 
     def logout(self):
         wait = WebDriverWait(self.browser, 20)
+        wait.until(EC.visibility_of_element_located((By.ID, 'button_logOut')))
         button_logout = wait.until(EC.element_to_be_clickable((By.ID, 'button_logOut')))
         return button_logout
 
     def input_username(self):
         wait = WebDriverWait(self.browser, 20)
+        wait.until(EC.visibility_of_element_located((By.ID, 'username_input')))
         username = wait.until(EC.element_to_be_clickable((By.ID, 'username_input')))
         return username
 
     def input_password(self):
         wait = WebDriverWait(self.browser, 20)
+        wait.until(EC.visibility_of_element_located((By.ID, 'password_input')))
         password = wait.until(EC.element_to_be_clickable((By.ID, 'password_input')))
         return password
 
     def button_login(self):
         wait = WebDriverWait(self.browser, 20)
+        wait.until(EC.visibility_of_element_located((By.XPATH, '//button[@type="submit"]')))
         button_login = wait.until(EC.element_to_be_clickable((By.XPATH, '//button[@type="submit"]')))
         button_login.click()
 

@@ -5,17 +5,29 @@ from selenium.webdriver.common.by import By
 
 
 class WebshopMainPage(GeneralPage):
-    def __init__(self):
-        self.URL = "http://localhost:4200"
-        super().__init__(self.URL)
+    def __init__(self, driver):
+        self.driver = driver
 
-    def teardown_method(self):
-        self.browser.quit()
+    def get(self):
+        self.driver.get("http://localhost:4200")
 
     def wait_for_angular(self):
         WebDriverWait(self.browser, 20).until(
             EC.presence_of_element_located((By.XPATH, '//app-root'))
         )
+        pass
+
+    # def __init__(self):
+    #     self.URL = "http://localhost:4200"
+    #     super().__init__(self.URL)
+    #
+    # def teardown_method(self):
+    #     self.browser.quit()
+    #
+    # def wait_for_angular(self):
+    #     WebDriverWait(self.browser, 20).until(
+    #         EC.presence_of_element_located((By.XPATH, '//app-root'))
+    #     )
 
     def price_of_instrument_by_order_number(self, number: int = -1):
         wait = WebDriverWait(self.browser, 20)

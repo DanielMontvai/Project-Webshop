@@ -1,3 +1,4 @@
+from generate_driver import get_preconfigured_chrome_driver
 from WebshopMainPage import WebshopMainPage
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -6,12 +7,21 @@ from selenium.webdriver.common.by import By
 
 class TestWebShop:
     def setup_method(self):
-        self.page = WebshopMainPage()
+        self.driver = get_preconfigured_chrome_driver()
+        self.page = WebshopMainPage(self.driver)
         self.page.get()
         self.page.wait_for_angular()
 
     def teardown_method(self):
-        self.page.quit()
+        self.driver.quit()
+    #
+    # def setup_method(self):
+    #     self.page = WebshopMainPage()
+    #     self.page.get()
+    #     self.page.wait_for_angular()
+    #
+    # def teardown_method(self):
+    #     self.page.quit()
 
     def test_pricecheck(self):
         assert self.page.price_of_instrument_by_order_number(1) == "Price: $90000"

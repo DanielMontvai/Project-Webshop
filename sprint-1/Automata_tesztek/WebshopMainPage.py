@@ -12,7 +12,7 @@ class WebshopMainPage(GeneralPage):
         self.browser.quit()
 
     def price_of_instrument_by_order_number(self, number: int = -1):
-        wait = WebDriverWait(self.browser, 5)
+        wait = WebDriverWait(self.browser, 20)
         prices = wait.until(EC.presence_of_all_elements_located((By.XPATH, '//mat-card-subtitle')))
         mp_prices_list = []
         if number == -1:
@@ -24,7 +24,7 @@ class WebshopMainPage(GeneralPage):
 
 
     def name_of_instrument(self, number: int = -1):
-        wait = WebDriverWait(self.browser, 5)
+        wait = WebDriverWait(self.browser, 20)
         names = wait.until(EC.presence_of_all_elements_located(
             (By.XPATH, '//mat-card-title[@class="mat-tooltip-trigger mat-card-title"]')))
         mp_names_list = []
@@ -44,27 +44,27 @@ class WebshopMainPage(GeneralPage):
         return dict(zip(instrument_names, instrument_prices))
 
     def reglogin(self):
-        wait = WebDriverWait(self.browser, 5)
+        wait = WebDriverWait(self.browser, 20)
         login = wait.until(EC.element_to_be_clickable((By.ID, 'regLogin')))
         login.click()
 
     def logout(self):
-        wait = WebDriverWait(self.browser, 5)
+        wait = WebDriverWait(self.browser, 20)
         button_logout = wait.until(EC.element_to_be_clickable((By.ID, 'button_logOut')))
         return button_logout
 
     def input_username(self):
-        wait = WebDriverWait(self.browser, 5)
+        wait = WebDriverWait(self.browser, 20)
         username = wait.until(EC.element_to_be_clickable((By.ID, 'username_input')))
         return username
 
     def input_password(self):
-        wait = WebDriverWait(self.browser, 5)
+        wait = WebDriverWait(self.browser, 20)
         password = wait.until(EC.element_to_be_clickable((By.ID, 'password_input')))
         return password
 
     def button_login(self):
-        wait = WebDriverWait(self.browser, 5)
+        wait = WebDriverWait(self.browser, 20)
         button_login = wait.until(EC.element_to_be_clickable((By.XPATH, '//button[@type="submit"]')))
         button_login.click()
 

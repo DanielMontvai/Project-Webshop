@@ -1,5 +1,4 @@
 from selenium.webdriver.chrome.webdriver import WebDriver
-from generate_driver import get_preconfigured_chrome_driver
 
 
 class GeneralPage:

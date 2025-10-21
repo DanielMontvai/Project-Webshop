@@ -3,6 +3,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 
+
 class WebshopMainPage(GeneralPage):
     def __init__(self):
         self.URL = "http://localhost:4200"
@@ -25,8 +26,7 @@ class WebshopMainPage(GeneralPage):
                 mp_prices_list.append(price.text)
             return mp_prices_list
         else:
-            return prices[number-1].text
-
+            return prices[number - 1].text
 
     def name_of_instrument(self, number: int = -1):
         wait = WebDriverWait(self.browser, 20)
@@ -38,7 +38,7 @@ class WebshopMainPage(GeneralPage):
                 mp_names_list.append(name.text)
             return mp_names_list
         else:
-            return names[number-1].text
+            return names[number - 1].text
 
     def number_of_available_instruments(self):
         return self.price_of_instrument_by_order_number()
@@ -58,7 +58,7 @@ class WebshopMainPage(GeneralPage):
             login = wait.until(
                 EC.element_to_be_clickable((By.XPATH, '//div[@class="sidenavbar_icons"]//mat-icon[text()="person"]')))
             login.click()
-        except:
+        except RegLogin_visible:
             login = wait.until(EC.element_to_be_clickable((By.ID, 'regLogin')))
             login.click()
 

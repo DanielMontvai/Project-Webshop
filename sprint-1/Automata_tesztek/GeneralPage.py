@@ -3,12 +3,13 @@ from generate_driver import get_preconfigured_chrome_driver
 
 
 class GeneralPage:
-    def __init__(self, url, browser=None):
+    def __init__(self, url, browser: WebDriver = None):
         self.URL = url
-        if browser is None:
-            self.browser = get_preconfigured_chrome_driver()
-        else:
+        if browser:
             self.browser = browser
+        else:
+            from generate_driver import get_preconfigured_chrome_driver
+            self.browser = get_preconfigured_chrome_driver()
 
     def get(self):
         self.browser.get(self.URL)

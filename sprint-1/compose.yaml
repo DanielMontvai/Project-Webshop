@@ -2,8 +2,6 @@ version: "3.9"
 services:
   database:
     image: mysql:8.0.36
-    volumes:
-      - "./:/docker-entrypoint-initdb.d"
     container_name: database
     restart: unless-stopped
     environment:
@@ -12,7 +10,7 @@ services:
     ports:
       - "3306:3306"
     healthcheck:
-      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       timeout: 20s
       retries: 5
 
@@ -26,6 +24,7 @@ services:
       - "8080:8080"
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://database:3306/webshop?serverTimezone=UTC&characterEncoding=utf8
+
   frontend:
     image: csineva/webshop-frontend:sprint-1
     container_name: frontend

@@ -104,82 +104,67 @@
 #         pwd.send_keys(password)
 
 from GeneralPage import GeneralPage
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 class WebshopMainPage(GeneralPage):
     def __init__(self):
-        self.URL = "http://localhost:4200"
-        super().__init__(self.URL)
+        super().__init__("http://localhost:4200")
 
-    def teardown_method(self):
-        self.browser.quit()
-
-    # ------------------ Prices & Names ------------------
+    # ---------------- Prices & Names ----------------
     def price_of_instrument_by_order_number(self, number: int = -1):
-        wait = WebDriverWait(self.browser, 20)
+        wait = WebDriverWait(self.browser, 10)
         prices = wait.until(EC.presence_of_all_elements_located((By.XPATH, '//mat-card-subtitle')))
-        mp_prices_list = [price.text for price in prices]
         if number == -1:
-            return mp_prices_list
-        else:
-            return mp_prices_list[number-1]
+            return [p.text for p in prices]
+        return prices[number-1].text
 
     def name_of_instrument(self, number: int = -1):
-        wait = WebDriverWait(self.browser, 20)
+        wait = WebDriverWait(self.browser, 10)
         names = wait.until(EC.presence_of_all_elements_located(
             (By.XPATH, '//mat-card-title[@class="mat-tooltip-trigger mat-card-title"]')))
-        mp_names_list = [name.text for name in names]
         if number == -1:
-            return mp_names_list
-        else:
-            return mp_names_list[number-1]
+            return [n.text for n in names]
+        return names[number-1].text
 
-    def number_of_available_insturments(self):
-        return self.price_of_instrument_by_order_number()
+    def number_of_available_instruments(self):
+        return len(self.price_of_instrument_by_order_number())
 
     def name_price_dictionary(self):
         return dict(zip(self.name_of_instrument(), self.price_of_instrument_by_order_number()))
 
-    # ------------------ Login/Logout ------------------
+    # ---------------- Login ----------------
     def reglogin(self):
         wait = WebDriverWait(self.browser, 30)
-
-        # wait for Angular root & navbar
-        wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, 'app-root')))
-        wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, '.navbar_icons')))
-
-        # click login button
-        login_button = wait.until(EC.element_to_be_clickable((By.ID, 'regLogin')))
-        login_button.click()
-
-        # wait for Material overlay
-        wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, '.cdk-overlay-pane')))
+        login_btn = wait.until(EC.element_to_be_clickable((By.ID, "regLogin")))
+        login_btn.click()
+        # wait for overlay to appear
+        wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, ".cdk-overlay-pane")))
 
     def logout(self):
         wait = WebDriverWait(self.browser, 20)
-        wait.until(EC.visibility_of_element_located((By.ID, 'button_logOut')))
-        button_logout = wait.until(EC.element_to_be_clickable((By.ID, 'button_logOut')))
-        return button_logout
+        btn_logout = wait.until(EC.element_to_be_clickable((By.ID, "button_logOut")))
+        return btn_logout
+
+    def input_username(self):
+        wait = WebDriverWait(self.browser, 20)
+        return wait.until(EC.element_to_be_clickable((By.ID, "username_input")))
+
+    def input_password(self):
+        wait = WebDriverWait(self.browser, 20)
+        return wait.until(EC.element_to_be_clickable((By.ID, "password_input")))
+
+    def button_login(self):
+        wait = WebDriverWait(self.browser, 20)
+        btn = wait.until(EC.element_to_be_clickable((By.XPATH, '//button[@type="submit"]')))
+        btn.click()
 
     def login_process(self, username, password):
-        wait = WebDriverWait(self.browser, 30)
-
         self.reglogin()
-
-        # inside overlay, wait for username/password fields
-        user = wait.until(EC.element_to_be_clickable((By.ID, 'username_input')))
-        pwd  = wait.until(EC.element_to_be_clickable((By.ID, 'password_input')))
-
+        # overlay input fields
+        user = self.input_username()
+        pwd = self.input_password()
         user.send_keys(username)
         pwd.send_keys(password)
-
-        # click login button
-        login_button = wait.until(
-            EC.element_to_be_clickable((By.XPATH, '//button[@type="submit"]'))
-        )
-        login_button.click()
-
-        # confirm login success
-        wait.until(EC.presence_of_element_located((By.ID, 'button_logOut')))
+        self.button_login()

@@ -7,6 +7,7 @@ class TestWebShop:
     def setup_method(self):
         self.page = WebshopMainPage()
         self.page.get()
+        self.page.wait_for_angular()
 
     def teardown_method(self):
         self.page.quit()

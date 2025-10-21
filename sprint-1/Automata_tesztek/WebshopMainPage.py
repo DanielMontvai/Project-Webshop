@@ -42,3 +42,33 @@ class WebshopMainPage(GeneralPage):
         instrument_names = self.name_of_instrument()
         instrument_prices = self.price_of_instrument_by_order_number()
         return dict(zip(instrument_names, instrument_prices))
+
+    def reglogin(self):
+        wait = WebDriverWait(self.browser, 5)
+        login = wait.until(EC.element_to_be_clickable((By.ID, 'regLogin')))
+        login.click()
+
+    def logout(self):
+        wait = WebDriverWait(self.browser, 5)
+        button_logout = wait.until(EC.element_to_be_clickable((By.ID, 'button_logOut')))
+        return button_logout
+
+    def input_username(self):
+        wait = WebDriverWait(self.browser, 5)
+        username = wait.until(EC.element_to_be_clickable((By.ID, 'username_input')))
+        return username
+
+    def input_password(self):
+        wait = WebDriverWait(self.browser, 5)
+        password = wait.until(EC.element_to_be_clickable((By.ID, 'password_input')))
+        return password
+
+    def button_login(self):
+        wait = WebDriverWait(self.browser, 5)
+        button_login = wait.until(EC.element_to_be_clickable((By.XPATH, '//button[@type="submit"]')))
+        button_login.click()
+
+    def login_process(self, username, passowrd):
+        self.reglogin()
+        self.input_password().send_keys(passowrd)
+        self.input_username().send_keys(username)

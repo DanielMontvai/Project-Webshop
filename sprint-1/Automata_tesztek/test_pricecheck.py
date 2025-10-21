@@ -19,3 +19,9 @@ class TestWebShop:
 
     def test_number_available_instruments(self):
         assert len(self.page.number_of_available_insturments()) == 22
+
+    def test_login(self):
+        self.page.login_process('forlogin', 'Forlogin@1')
+        self.page.button_login()
+        self.page.logout()
+        assert self.page.logout().is_displayed()

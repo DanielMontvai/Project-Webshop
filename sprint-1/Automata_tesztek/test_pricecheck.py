@@ -7,21 +7,12 @@ from selenium.webdriver.common.by import By
 
 class TestWebShop:
     def setup_method(self):
-        self.driver = get_preconfigured_chrome_driver()
-        self.page = WebshopMainPage(self.driver)
+        self.page = WebshopMainPage()
         self.page.get()
         self.page.wait_for_angular()
 
     def teardown_method(self):
-        self.driver.quit()
-    #
-    # def setup_method(self):
-    #     self.page = WebshopMainPage()
-    #     self.page.get()
-    #     self.page.wait_for_angular()
-    #
-    # def teardown_method(self):
-    #     self.page.quit()
+        self.page.quit()
 
     def test_pricecheck(self):
         assert self.page.price_of_instrument_by_order_number(1) == "Price: $90000"

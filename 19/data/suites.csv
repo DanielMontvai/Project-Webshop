@@ -1,0 +1,2 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"Test that a user can login successfully","0","test_login","sprint-1.Automata_tesztek","Tue Oct 21 09:03:14 UTC 2025","broken","Tue Oct 21 09:03:14 UTC 2025","TestWebShop","test_pricecheck","",""

@@ -24,6 +24,11 @@ services:
       - "8080:8080"
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://database:3306/webshop?serverTimezone=UTC&characterEncoding=utf8
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8080/actuator/health" ]
+      interval: 5s
+      timeout: 3s
+      retries: 10
 
   frontend:
     image: csineva/webshop-frontend:sprint-1
@@ -32,7 +37,7 @@ services:
       - "4200:4200"
     depends_on:
       backend:
-        condition: service_started
+        condition: service_healthy
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:4200" ]
       interval: 5s

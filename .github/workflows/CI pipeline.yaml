@@ -13,7 +13,8 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v3
+    # v4 is current
+      uses: actions/checkout@v4
 
     - name: Set up Python
       uses: actions/setup-python@v4
@@ -27,62 +28,58 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
         pip install flake8 pytest allure-pytest
 
-    - name: Install Chrome & Chromedriver
+    - name: Show Chrome & Chromedriver
       run: |
-        google-chrome --version
-        chromedriver --version
+        google-chrome --version || true
+        chromedriver --version || true
 
     - name: Start docker services (webshop)
       uses: hoverkraft-tech/compose-action@v2.0.1
       with:
         compose-file: "./sprint-1/compose.yaml"
 
-    - name: Wait for backend & frontend readiness
+    - name: Wait for backend to be ready
       run: |
-        echo "Waiting for backend..."
-        for i in {1..30}; do
-          if curl -s http://localhost:8080 > /dev/null; then
-            echo "Backend is up!"
+        echo "Waiting for backend (http://localhost:8080/)..."
+        for i in {1..60}; do
+          if curl -fsS http://localhost:8080/ >/dev/null; then
+            echo "✅ Backend is UP"
             break
           fi
           echo "Backend not ready yet..."
           sleep 2
         done
+        # hard fail with logs if still down
+        curl -fsS http://localhost:8080/ >/dev/null || (echo "❌ Backend never became ready"; docker logs backend || true; exit 1)
 
-        echo "Waiting for frontend..."
-        for i in {1..30}; do
-          if curl -s http://localhost:4200 > /dev/null; then
-            echo "Frontend is up!"
+    - name: Wait for frontend to be ready
+      run: |
+        echo "Waiting for frontend (http://localhost:4200/)..."
+        for i in {1..60}; do
+          if curl -fsS http://localhost:4200/ >/dev/null; then
+            echo "✅ Frontend is UP"
             break
           fi
-          echo "Frontend not ready yet..."
+          echo "UI not ready yet..."
           sleep 2
         done
+        # hard fail with logs if still down
+        curl -fsS http://localhost:4200/ >/dev/null || (echo "❌ Frontend never became ready"; docker logs frontend || true; exit 1)
 
     - name: Lint with flake8
       run: |
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
-    - name: Wait for frontend UI to render
-      run: |
-        echo "Waiting for Angular to finish rendering..."
-        for i in {1..40}; do
-          if curl -s http://localhost:4200 | grep -q "mat-card"; then
-            echo "UI is ready!"
-            break
-          fi
-          echo "UI not ready yet..."
-          sleep 3
-        done
-
     - name: Run Selenium tests & collect Allure results
+      env:
+        CI: "true"  # let your driver pick headless flags
       run: |
         pytest ./sprint-1 --alluredir=./reports/allure-results
 
     - name: Generate Allure report history
-      uses: simple-elf/allure-report-action@master
       if: always()
+      uses: simple-elf/allure-report-action@master
       with:
         allure_results: ./reports/allure-results
         allure_history: ./reports/allure-history

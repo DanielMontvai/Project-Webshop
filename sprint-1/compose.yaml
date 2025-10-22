@@ -25,10 +25,11 @@ services:
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://database:3306/webshop?serverTimezone=UTC&characterEncoding=utf8
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:8080/actuator/health" ]
-      interval: 5s
-      timeout: 3s
-      retries: 10
+      healthcheck:
+        test: [ "CMD", "curl", "-f", "http://localhost:8080 || exit 1" ]
+        interval: 5s
+        timeout: 10s
+        retries: 5
 
   frontend:
     image: csineva/webshop-frontend:sprint-1
@@ -39,7 +40,7 @@ services:
       backend:
         condition: service_healthy
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:4200" ]
+      test: [ "CMD", "curl", "-f", "http://localhost:4200 || exit 1" ]
       interval: 5s
-      timeout: 2s
-      retries: 10
+      timeout: 10s
+      retries: 5

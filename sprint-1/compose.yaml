@@ -24,6 +24,7 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:mysql://database:3306/webshop?serverTimezone=UTC&characterEncoding=utf8
     ports:
       - "8080:8080"
+    network_mode: host
 
   frontend:
     image: csineva/webshop-frontend:sprint-1
@@ -32,3 +33,4 @@ services:
       - backend
     ports:
       - "4200:4200"
+    network_mode: host

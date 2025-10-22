@@ -6,8 +6,7 @@ services:
     environment:
       - MYSQL_DATABASE=webshop
       - MYSQL_ROOT_PASSWORD=test1234
-    ports:
-      - "3306:3306"
+    network_mode: "host"
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-ptest1234"]
       interval: 5s
@@ -21,16 +20,12 @@ services:
       database:
         condition: service_healthy
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://database:3306/webshop?serverTimezone=UTC&characterEncoding=utf8
-    ports:
-      - "8080:8080"
-    network_mode: host
+      - SPRING_DATASOURCE_URL=jdbc:mysql://127.0.0.1:3306/webshop?serverTimezone=UTC&characterEncoding=utf8
+    network_mode: "host"
 
   frontend:
     image: csineva/webshop-frontend:sprint-1
     container_name: frontend
     depends_on:
       - backend
-    ports:
-      - "4200:4200"
-    network_mode: host
+    network_mode: "host"

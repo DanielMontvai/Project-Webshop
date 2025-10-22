@@ -3,7 +3,6 @@ name: CI Pipeline
 on:
   push:
     branches: ["master"]
-  pull_request:
 
 permissions:
   contents: write
@@ -13,9 +12,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-
     - name: Set up Python
       uses: actions/setup-python@v4
       with:

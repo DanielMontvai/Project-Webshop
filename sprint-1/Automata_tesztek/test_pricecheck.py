@@ -1,8 +1,4 @@
-from generate_driver import get_preconfigured_chrome_driver
 from WebshopMainPage import WebshopMainPage
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.by import By
 
 
 class TestWebShop:

@@ -37,6 +37,28 @@ jobs:
       with:
         compose-file: "./sprint-1/compose.yaml"
 
+    - name: Wait for backend & frontend readiness
+      run: |
+        echo "Waiting for backend..."
+        for i in {1..30}; do
+          if curl -s http://localhost:8080 > /dev/null; then
+            echo "Backend is up!"
+            break
+          fi
+          echo "Backend not ready yet..."
+          sleep 2
+        done
+
+        echo "Waiting for frontend..."
+        for i in {1..30}; do
+          if curl -s http://localhost:4200 > /dev/null; then
+            echo "Frontend is up!"
+            break
+          fi
+          echo "Frontend not ready yet..."
+          sleep 2
+        done
+
     - name: Lint with flake8
       run: |
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics

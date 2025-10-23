@@ -8,7 +8,7 @@ import time
 
 class WebshopMainPage(GeneralPage):
     def __init__(self):
-        self.URL = "http://localhost:4600"
+        self.URL = "http://localhost:4200"
         super().__init__(self.URL)
 
     def teardown_method(self):

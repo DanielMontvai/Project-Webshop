@@ -65,6 +65,12 @@ class WebshopMainPage(GeneralPage):
     def reglogin(self):
         wait = WebDriverWait(self.browser, 60)
         try:
+            login = wait.until(EC.element_to_be_clickable((By.ID, 'regLogin')))
+            try:
+                login.click()
+            except ElementClickInterceptedException:
+                self.browser.execute_script("arguments[0].click();", login)
+        except Exception:
             button_burger = wait.until(
                 EC.element_to_be_clickable((By.XPATH, '//mat-toolbar-row[@class="mat-toolbar-row"]/button')))
             button_burger.click()
@@ -72,12 +78,6 @@ class WebshopMainPage(GeneralPage):
             login = wait.until(
                 EC.element_to_be_clickable((By.XPATH, '//div[@class="sidenavbar_icons"]//mat-icon[text()="person"]')))
             login.click()
-        except Exception:
-            login = wait.until(EC.element_to_be_clickable((By.ID, 'regLogin')))
-            try:
-                login.click()
-            except ElementClickInterceptedException:
-                self.browser.execute_script("arguments[0].click();", login)
 
     def logout(self):
         wait = WebDriverWait(self.browser, 60)

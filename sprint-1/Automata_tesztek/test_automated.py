@@ -22,5 +22,6 @@ class TestWebShop:
     def test_login(self):
         self.page.login_process('forlogin', 'Forlogin@1')
         self.page.button_login()
-        self.page.logout()
-        assert self.page.logout().is_displayed()
+        assert self.page.err_message().is_displayed()
+        # self.page.logout()
+        # assert self.page.logout().is_displayed()

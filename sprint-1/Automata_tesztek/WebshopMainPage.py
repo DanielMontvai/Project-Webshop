@@ -99,6 +99,11 @@ class WebshopMainPage(GeneralPage):
         button_login = wait.until(EC.element_to_be_clickable((By.XPATH, '//button[@type="submit"]')))
         button_login.click()
 
+    def err_message(self):
+        wait = WebDriverWait(self.browser, 60)
+        err_message = wait.until(EC.visibility_of_element_located((By.XPATH, '//mat-error')))
+        return err_message
+
     def login_process(self, username, passowrd):
         self.reglogin()
         self.input_password().send_keys(passowrd)

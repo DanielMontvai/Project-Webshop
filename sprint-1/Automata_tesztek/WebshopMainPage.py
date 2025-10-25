@@ -81,8 +81,17 @@ class WebshopMainPage(GeneralPage):
 
     def logout(self):
         wait = WebDriverWait(self.browser, 60)
-        button_logout = wait.until(EC.element_to_be_clickable((By.ID, 'button_logOut')))
+        try:
+            button_logout = wait.until(EC.element_to_be_clickable((By.ID, 'button_logOut')))
+        except Exception:
+            button_burger = wait.until(
+                EC.element_to_be_clickable((By.XPATH, '//mat-toolbar-row[@class="mat-toolbar-row"]/button')))
+            button_burger.click()
+            wait.until(EC.presence_of_element_located((By.XPATH, '//div[@class="sidenavbar_icons"]')))
+            button_logout = wait.until(
+                EC.element_to_be_clickable((By.XPATH, '//div[@class="sidenavbar_icons"]//mat-icon[text()="logout"]')))
         return button_logout
+
 
     def input_username(self):
         wait = WebDriverWait(self.browser, 60)

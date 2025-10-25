@@ -1,17 +1,19 @@
 services:
   database:
     image: mysql:8.0.36
+    volumes:
+      - "./:/docker-entrypoint-initdb.d"
     container_name: database
     restart: unless-stopped
     environment:
       - MYSQL_DATABASE=webshop
       - MYSQL_ROOT_PASSWORD=test1234
-    network_mode: "host"
+    ports:
+      - "3306:3306"
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-ptest1234"]
-      interval: 5s
-      timeout: 3s
-      retries: 20
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+      timeout: 20s
+      retries: 5
 
   backend:
     image: csineva/webshop-backend:sprint-1
@@ -19,13 +21,14 @@ services:
     depends_on:
       database:
         condition: service_healthy
+    ports:
+      - "8080:8080"
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://127.0.0.1:3306/webshop?serverTimezone=UTC&characterEncoding=utf8
-    network_mode: "host"
-
+      - SPRING_DATASOURCE_URL=jdbc:mysql://database:3306/webshop?serverTimezone=UTC&characterEncoding=utf8
   frontend:
     image: csineva/webshop-frontend:sprint-1
     container_name: frontend
+    ports:
+      - "4200:4200"
     depends_on:
       - backend
-    network_mode: "host"

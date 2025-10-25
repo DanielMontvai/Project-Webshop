@@ -146,7 +146,7 @@ CREATE TABLE `custom_user` (
 
 LOCK TABLES `custom_user` WRITE;
 /*!40000 ALTER TABLE `custom_user` DISABLE KEYS */;
-INSERT INTO `custom_user` VALUES (1,'backend.admin@progmasters.hu',_binary '','$2a$12$/g8p/i8At7kLY.VBFvgdNeAOW8pqR.mQC6toCZvPcJhGqQbYigK12','admin',NULL,NULL),(2,'backend.user@progmasters.hu',_binary '','$2a$12$eyzSJMXSnSW5qq/CvJIEge9jS2b3w4ldlQul6xacpK/.dv4xTmGj2','user',NULL,NULL),(3,'ortaqbhnfjhptlwfuv@kvhrs.com',_binary '','$2a$10$G1QZ/f9ClmBaD1ZqSuXk0ul4x4vqoUBvT.UPc5t1ywoJiniXlklFm','exampleUser',NULL,NULL);
+INSERT INTO `custom_user` VALUES (1,'backend.admin@progmasters.hu',_binary '','$2a$12$/g8p/i8At7kLY.VBFvgdNeAOW8pqR.mQC6toCZvPcJhGqQbYigK12','admin',NULL,NULL),(2,'backend.user@progmasters.hu',_binary '','$2a$12$eyzSJMXSnSW5qq/CvJIEge9jS2b3w4ldlQul6xacpK/.dv4xTmGj2','user',NULL,NULL),(3,'ortaqbhnfjhptlwfuv@kvhrs.com',_binary '','$2a$10$G1QZ/f9ClmBaD1ZqSuXk0ul4x4vqoUBvT.UPc5t1ywoJiniXlklFm','exampleUser',NULL,NULL),(4,'hopjpelhrcolpkzyyk@nespj.com',_binary '','$2a$10$F6gbJwxmCMLtIke6TM2E0O2M4tR6X0rtrFWj63A5eNAvfGO.ZzlAS','forlogin',NULL,NULL);
 /*!40000 ALTER TABLE `custom_user` ENABLE KEYS */;
 UNLOCK TABLES;
 

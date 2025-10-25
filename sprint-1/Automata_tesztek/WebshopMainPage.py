@@ -14,7 +14,7 @@ class WebshopMainPage(GeneralPage):
     def teardown_method(self):
         self.browser.quit()
 
-    def wait_for_angular(self, timeout=60):
+    def wait_for_angular(self, timeout=20):
         print("⏳ Waiting for Angular to render...")
         end_time = time.time() + timeout
         while time.time() < end_time:
@@ -32,7 +32,7 @@ class WebshopMainPage(GeneralPage):
         raise TimeoutException("❌ Angular never became stable")
 
     def price_of_instrument_by_order_number(self, number: int = -1):
-        wait = WebDriverWait(self.browser, 60)
+        wait = WebDriverWait(self.browser, 20)
         prices = wait.until(EC.presence_of_all_elements_located((By.XPATH, '//mat-card-subtitle')))
         mp_prices_list = []
         if number == -1:
@@ -43,7 +43,7 @@ class WebshopMainPage(GeneralPage):
             return prices[number - 1].text
 
     def name_of_instrument(self, number: int = -1):
-        wait = WebDriverWait(self.browser, 60)
+        wait = WebDriverWait(self.browser, 20)
         names = wait.until(EC.presence_of_all_elements_located(
             (By.XPATH, '//mat-card-title[@class="mat-tooltip-trigger mat-card-title"]')))
         mp_names_list = []
@@ -63,53 +63,53 @@ class WebshopMainPage(GeneralPage):
         return dict(zip(instrument_names, instrument_prices))
 
     def reglogin(self):
-        wait = WebDriverWait(self.browser, 60)
+        wait = WebDriverWait(self.browser, 20)
+        # try:
+        login = wait.until(EC.element_to_be_clickable((By.ID, 'regLogin')))
         try:
-            login = wait.until(EC.element_to_be_clickable((By.ID, 'regLogin')))
-            try:
-                login.click()
-            except ElementClickInterceptedException:
-                self.browser.execute_script("arguments[0].click();", login)
-        except Exception:
-            button_burger = wait.until(
-                EC.element_to_be_clickable((By.XPATH, '//mat-toolbar-row[@class="mat-toolbar-row"]/button')))
-            button_burger.click()
-            wait.until(EC.presence_of_element_located((By.XPATH, '//div[@class="sidenavbar_icons"]')))
-            login = wait.until(
-                EC.element_to_be_clickable((By.XPATH, '//div[@class="sidenavbar_icons"]//mat-icon[text()="person"]')))
             login.click()
+        except ElementClickInterceptedException:
+            self.browser.execute_script("arguments[0].click();", login)
+        # except Exception:
+        #     button_burger = wait.until(
+        #         EC.element_to_be_clickable((By.XPATH, '//mat-toolbar-row[@class="mat-toolbar-row"]/button')))
+        #     button_burger.click()
+        #     wait.until(EC.presence_of_element_located((By.XPATH, '//div[@class="sidenavbar_icons"]')))
+        #     login = wait.until(
+        #         EC.element_to_be_clickable((By.XPATH, '//div[@class="sidenavbar_icons"]//mat-icon[text()="person"]')))
+        #     login.click()
 
     def logout(self):
-        wait = WebDriverWait(self.browser, 60)
-        try:
-            button_logout = wait.until(EC.element_to_be_clickable((By.ID, 'button_logOut')))
-        except Exception:
-            button_burger = wait.until(
-                EC.element_to_be_clickable((By.XPATH, '//mat-toolbar-row[@class="mat-toolbar-row"]/button')))
-            button_burger.click()
-            wait.until(EC.presence_of_element_located((By.XPATH, '//div[@class="sidenavbar_icons"]')))
-            button_logout = wait.until(
-                EC.element_to_be_clickable((By.XPATH, '//div[@class="sidenavbar_icons"]//mat-icon[text()="logout"]')))
+        wait = WebDriverWait(self.browser, 20)
+        # try:
+        button_logout = wait.until(EC.element_to_be_clickable((By.ID, 'button_logOut')))
+        # except Exception:
+        #     button_burger = wait.until(
+        #         EC.element_to_be_clickable((By.XPATH, '//mat-toolbar-row[@class="mat-toolbar-row"]/button')))
+        #     button_burger.click()
+        #     wait.until(EC.presence_of_element_located((By.XPATH, '//div[@class="sidenavbar_icons"]')))
+        #     button_logout = wait.until(
+        #         EC.element_to_be_clickable((By.XPATH, '//div[@class="sidenavbar_icons"]//mat-icon[text()="logout"]')))
         return button_logout
 
 
     def input_username(self):
-        wait = WebDriverWait(self.browser, 60)
+        wait = WebDriverWait(self.browser, 20)
         username = wait.until(EC.element_to_be_clickable((By.ID, 'username_input')))
         return username
 
     def input_password(self):
-        wait = WebDriverWait(self.browser, 60)
+        wait = WebDriverWait(self.browser, 20)
         password = wait.until(EC.element_to_be_clickable((By.ID, 'password_input')))
         return password
 
     def button_login(self):
-        wait = WebDriverWait(self.browser, 60)
+        wait = WebDriverWait(self.browser, 20)
         button_login = wait.until(EC.element_to_be_clickable((By.XPATH, '//button[@type="submit"]')))
         button_login.click()
 
     def err_message(self):
-        wait = WebDriverWait(self.browser, 60)
+        wait = WebDriverWait(self.browser, 20)
         err_message = wait.until(EC.visibility_of_element_located((By.XPATH, '//mat-error')))
         return err_message
 

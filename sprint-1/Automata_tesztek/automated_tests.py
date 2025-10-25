@@ -4,7 +4,7 @@ from WebshopMainPage import WebshopMainPage
 class TestWebShop:
     def setup_method(self):
         self.page = WebshopMainPage()
-        self.page.get()
+        print(self.page.get())
         self.page.wait_for_angular(timeout=120)
 
     def teardown_method(self):

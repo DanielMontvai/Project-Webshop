@@ -37,7 +37,7 @@ class TestWebShop:
 
     @allure.title('Add New Instrument')
     def test_add_new_instrument(self):
-        assert len(self.page.number_of_available_instruments()) == 23
+        assert len(self.page.number_of_available_instruments()) == 22
         self.page.add_instrument('Jazz Guitar', 10000, 'Beautiful jazz guitar from the 1800s',
                                  '"GUITAR FAMILY"')
-        assert len(self.page.number_of_available_instruments()) == 24
+        assert len(self.page.number_of_available_instruments()) == 23

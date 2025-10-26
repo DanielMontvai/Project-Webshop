@@ -51,11 +51,6 @@ jobs:
         done
         curl -fsS http://localhost:8080/api/products >/dev/null || (echo "❌ Backend never became ready"; docker logs backend || true; exit 1)
 
-    - name: Print contents of custom_user table
-      run: |
-        echo "📋 Checking custom_user table contents..."
-        docker exec database mysql -uroot -ptest1234 -D webshop -e "SELECT * FROM custom_user;"
-
     - name: Wait for frontend to be ready
       run: |
         echo "Waiting for frontend (http://localhost:4200/)..."

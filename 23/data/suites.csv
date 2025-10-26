@@ -1,7 +1,0 @@
-"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
-"","31","san2","sprint-1.Automata_tesztek","Sun Oct 26 17:27:45 UTC 2025","passed","Sun Oct 26 17:27:45 UTC 2025","TestWebShop","test_automated","",""
-"","1692","Login","sprint-1.Automata_tesztek","Sun Oct 26 17:27:46 UTC 2025","passed","Sun Oct 26 17:27:48 UTC 2025","TestWebShop","test_automated","",""
-"","130","san1","sprint-1.Automata_tesztek","Sun Oct 26 17:27:44 UTC 2025","passed","Sun Oct 26 17:27:44 UTC 2025","TestWebShop","test_automated","",""
-"","149","Add New Instrument","sprint-1.Automata_tesztek","Sun Oct 26 17:27:50 UTC 2025","failed","Sun Oct 26 17:27:50 UTC 2025","TestWebShop","test_automated","",""
-"","387","Shopping Cart Counter","sprint-1.Automata_tesztek","Sun Oct 26 17:27:49 UTC 2025","passed","Sun Oct 26 17:27:49 UTC 2025","TestWebShop","test_automated","",""
-"","251","san3","sprint-1.Automata_tesztek","Sun Oct 26 17:27:45 UTC 2025","passed","Sun Oct 26 17:27:46 UTC 2025","TestWebShop","test_automated","",""

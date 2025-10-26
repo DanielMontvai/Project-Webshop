@@ -135,3 +135,71 @@ class WebshopMainPage(GeneralPage):
             self.add_to_cart_by_name(name)
             counter += 1
         return counter
+
+    def new_product_page(self):
+        wait = WebDriverWait(self.browser, 20)
+        button_new_product = wait.until(EC.element_to_be_clickable((By.XPATH, '//a[@id="button_newProduct"]')))
+        button_new_product.click()
+
+    def input_product_name(self):
+        wait = WebDriverWait(self.browser, 20)
+        input_product_name = wait.until(EC.element_to_be_clickable((By.XPATH, '//input[@id="input_pName"]')))
+        return input_product_name
+
+    def select_categories_field(self):
+        wait = WebDriverWait(self.browser, 20)
+        select_categories = wait.until(EC.element_to_be_clickable((By.XPATH,
+                                                                          '//mat-select[@id="input_Select"]')))
+        return select_categories
+
+    def select_from_select_categories(self, category):
+        wait = WebDriverWait(self.browser, 20)
+        select_single_category = wait.until(EC.element_to_be_clickable((By.XPATH,
+                                                                   f'//span[text()={category}]')))
+        select_single_category.click()
+
+    def input_price(self):
+        wait = WebDriverWait(self.browser, 20)
+        input_price = wait.until(EC.element_to_be_clickable((By.XPATH, '//input[@id="input_pPrice"]')))
+        return input_price
+
+    def textarea_desc(self):
+        wait = WebDriverWait(self.browser, 20)
+        textarea_desc = wait.until(EC.element_to_be_clickable((By.XPATH, '//textarea[@id="input_pDesc"]')))
+        return textarea_desc
+
+    def button_saveproduct(self):
+        wait = WebDriverWait(self.browser, 20)
+        button_saveproduct = wait.until(EC.element_to_be_clickable((By.XPATH, '//button[@id="button_saveProduct"]')))
+        return button_saveproduct
+
+    # def button_saveprodct_available(self):
+    #     def wait_until_save_button_enabled(self, timeout=20):
+    #         wait = WebDriverWait(self.browser, timeout)
+    #         try:
+    #             wait.until_not(
+    #                 lambda driver: driver.find_element(By.ID, "button_saveProduct").get_attribute("disabled")
+    #             )
+    #             return True
+    #         except TimeoutException:
+    #             return False
+
+    def return_to_main_page(self):
+        wait = WebDriverWait(self.browser, 20)
+        img_progmusicx = wait.until(EC.element_to_be_clickable((By.XPATH, '//img[@id="logo-side"]')))
+        img_progmusicx.click()
+
+    def add_instrument(self, product_name, price, description, category: str):
+        from selenium.webdriver.common.keys import Keys
+        self.login_process('admin', 'admin')
+        self.button_login()
+        self.new_product_page()
+        self.input_product_name().send_keys(product_name)
+        self.input_price().send_keys(price)
+        self.textarea_desc().send_keys(description)
+        self.select_categories_field().click()
+        self.select_from_select_categories(category)
+        self.select_categories_field().send_keys(Keys.ESCAPE)
+        # self.button_saveprodct_available()
+        self.button_saveproduct().click()
+        self.return_to_main_page()

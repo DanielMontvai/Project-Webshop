@@ -25,10 +25,17 @@ class TestWebShop:
     @allure.title('Login')
     def test_login(self):
         self.page.login_process('forlogin', 'Forlogin@1')
-        self.page.button_login()
-        # assert self.page.err_message().is_displayed()
+        self.page.button_submit_login()
         self.page.logout()
         assert self.page.logout().is_displayed()
+
+    @allure.title('Iphone 14 Pro Max Login')
+    def test_login(self):
+        self.page.resize_window(430, 932)
+        self.page.resp_login_process('forlogin', 'Forlogin@1')
+        self.page.button_submit_login()
+        self.page.resp_logout()
+        assert self.page.resp_logout().is_displayed()
 
     @allure.title('Shopping Cart Counter')
     def test_shopping_cart(self):
@@ -41,3 +48,17 @@ class TestWebShop:
         self.page.add_instrument('Jazz Guitar', 10000, 'Beautiful jazz guitar from the 1800s',
                                  '"GUITAR FAMILY"')
         assert len(self.page.number_of_available_instruments()) == 23
+
+    @allure.title('Delete Instrument By Name')
+    def test_delete_instrument_by_name(self):
+        self.page.login_process('admin', 'admin')
+        self.page.button_submit_login()
+        assert len(self.page.number_of_available_instruments()) == 23
+        self.page.delete_instrument('Jazz Guitar')
+        assert len(self.page.number_of_available_instruments()) == 22
+
+    @allure.title('Price On Main vs Details')
+    def test_price_main_vs_details(self, name = 'Viola made of birch'):
+        price_on_main = self.page.price_by_name(name)
+        price_in_details = self.page.price_in_details(name)
+        assert price_on_main == price_in_details

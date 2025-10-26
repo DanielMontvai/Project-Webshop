@@ -117,3 +117,21 @@ class WebshopMainPage(GeneralPage):
         self.reglogin()
         self.input_password().send_keys(passowrd)
         self.input_username().send_keys(username)
+
+    def shopping_cart_number(self):
+        wait = WebDriverWait(self.browser, 20)
+        sc_number = wait.until(EC.visibility_of_element_located((By.XPATH, '//span[@id="mat-badge-content-0"]')))
+        return sc_number.text
+
+    def add_to_cart_by_name(self, name):
+        wait = WebDriverWait(self.browser, 20)
+        xpath_atc = f'//mat-card-title[text()="{name}"]/ancestor::mat-card//button[@id="button_addToCart"]'
+        button_add_to_cart_by_name = wait.until(EC.element_to_be_clickable((By.XPATH, xpath_atc)))
+        button_add_to_cart_by_name.click()
+
+    def scart_counter(self, *names):
+        counter = 0
+        for name in names:
+            self.add_to_cart_by_name(name)
+            counter += 1
+        return counter

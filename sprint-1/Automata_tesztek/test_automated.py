@@ -1,5 +1,5 @@
 from WebshopMainPage import WebshopMainPage
-
+import allure
 
 class TestWebShop:
     def setup_method(self):
@@ -19,9 +19,15 @@ class TestWebShop:
     def test_number_available_instruments(self):
         assert len(self.page.number_of_available_instruments()) == 22
 
+    @allure.title('Login')
     def test_login(self):
         self.page.login_process('forlogin', 'Forlogin@1')
         self.page.button_login()
         # assert self.page.err_message().is_displayed()
         self.page.logout()
         assert self.page.logout().is_displayed()
+
+    @allure.title('Shopping Cart Counter')
+    def test_shopping_cart(self):
+        counter = self.page.scart_counter('Viola made of birch', 'Fine Double Bass', 'Renewed oboe', 'Black Basson')
+        assert str(counter) == self.page.shopping_cart_number()
